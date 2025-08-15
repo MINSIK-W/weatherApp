@@ -1,7 +1,14 @@
-export function convertToGrid(
-  lat: number,
-  lng: number
-): { nx: number; ny: number } {
+interface GridCoordinate {
+  nx: number; // 격자 X 좌표
+  ny: number; // 격자 Y 좌표
+}
+
+interface GpsCoordinate {
+  latitude: number; // 위도
+  longitude: number; // 경도
+}
+
+export function convertToGrid(gps: GpsCoordinate): GridCoordinate {
   const RE = 6371.00877; // 반경(km)
   const GRID = 5.0; // 간격(km)
   const SLAT1 = 30.0; // 위도1
@@ -20,18 +27,16 @@ export function convertToGrid(
   const olon = OLON * DEGRAD;
   const olat = OLAT * DEGRAD;
 
-  let sn =
-    Math.tan(Math.PI * 0.25 + slat2 * 0.5) /
-    Math.tan(Math.PI * 0.25 + slat1 * 0.5);
+  let sn = Math.tan(Math.PI * 0.25 + slat2 * 0.5) / Math.tan(Math.PI * 0.25 + slat1 * 0.5);
   sn = Math.log(Math.cos(slat1) / Math.cos(slat2)) / Math.log(sn);
   let sf = Math.tan(Math.PI * 0.25 + slat1 * 0.5);
   sf = (Math.pow(sf, sn) * Math.cos(slat1)) / sn;
   let ro = Math.tan(Math.PI * 0.25 + olat * 0.5);
   ro = (re * sf) / Math.pow(ro, sn);
 
-  let ra = Math.tan(Math.PI * 0.25 + lat * DEGRAD * 0.5);
+  let ra = Math.tan(Math.PI * 0.25 + gps.latitude * DEGRAD * 0.5);
   ra = (re * sf) / Math.pow(ra, sn);
-  let theta = lng * DEGRAD - olon;
+  let theta = gps.longitude * DEGRAD - olon;
   if (theta > Math.PI) theta -= 2.0 * Math.PI;
   if (theta < -Math.PI) theta += 2.0 * Math.PI;
   theta *= sn;
