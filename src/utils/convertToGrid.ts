@@ -46,3 +46,10 @@ export function convertToGrid(gps: GpsCoordinate): GridCoordinate {
 
   return { nx, ny };
 }
+export const testCoordinateConversion = () => {
+  const seoul = { latitude: 37.5665, longitude: 126.978 }; // 서울시청
+  const grid = convertToGrid(seoul);
+  console.log('서울시청 GPS:', seoul);
+  console.log('서울시청 격자:', grid);
+  // 예상 결과: nx: 60, ny: 127 정도 나와야 함
+};

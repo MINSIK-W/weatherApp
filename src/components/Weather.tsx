@@ -1,13 +1,18 @@
-import * as React from 'react';
 import { useState } from 'react';
 import { Search } from 'lucide-react';
 import WeatherIcon from './WeatherIcon.tsx';
+import { testCoordinateConversion } from '../utils/convertToGrid.ts';
 import { searchLocation } from '../utils/kakaoApi.ts';
 
 export default function Weather() {
   const [searchQuery, setSearchQuery] = useState('');
   const [locationName, setLocationName] = useState('서울');
   const [isLoading, setIsLoading] = useState(false);
+
+  // 좌표 변환 테스트 (개발용)
+  const handleTestCoordinates = () => {
+    testCoordinateConversion();
+  };
 
   // 검색 버튼 클릭 핸들러
   const handleSearch = async () => {
@@ -82,6 +87,14 @@ export default function Weather() {
       <div className='flex flex-col items-center gap-3'>
         <p className='text-white text-7xl font-semibold tracking-tight'>16°C</p>
         <p className='text-white text-4xl'>{locationName}</p>
+
+        {/* 개발용 테스트 버튼 */}
+        <button
+          onClick={handleTestCoordinates}
+          className='mt-2 px-4 py-2 bg-yellow-500 text-black rounded text-sm'
+        >
+          좌표 변환 테스트
+        </button>
       </div>
 
       <div className='w-full text-white mt-10 flex justify-between'>
