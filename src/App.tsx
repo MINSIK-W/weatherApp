@@ -17,7 +17,7 @@ function App() {
             >
               기상청
             </a>
-            (날씨 정보 REST API),
+            (날씨 정보 REST API),{' '}
             <a
               className='font-semibold underline hover:text-indigo-500 transition mx-1'
               href='https://developers.kakao.com/'
@@ -26,13 +26,13 @@ function App() {
             >
               Kakao Developers
             </a>
-            (검색/좌표 REST API) 데이터를 활용합니다.
+            (검색/좌표 REST API)데이터를 활용합니다.
           </p>
         </div>
       </div>
       <Developing
-        progress={70}
-        eta='8월 4주 예정'
+        progress={80}
+        eta='8월 4주차 예정'
         message='작업 진행중입니다.'
         showCloseButton={true}
       />
