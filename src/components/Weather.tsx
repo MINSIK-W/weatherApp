@@ -14,6 +14,7 @@ export default function Weather() {
     humidity: number;
     windSpeed: number;
     skyCondition: string;
+    iconType: 'clear' | 'cloud' | 'drizzle' | 'rain' | 'snow' | 'wind';
   } | null>(null);
 
   // 컴포넌트 마운트시 자동으로 위치/날씨 가져오기
@@ -39,7 +40,7 @@ export default function Weather() {
           : addressInfo.district;
         setLocationName(shortAddress);
       } catch (err) {
-        console.warn('변환 실패 && 기본값 사용', err);
+        console.warn('주소 변환 실패, 기본값 사용:', err);
         setLocationName('현재 위치');
       }
 
@@ -60,7 +61,7 @@ export default function Weather() {
   const handleCurrentLocation = async () => {
     setIsLoading(true);
     try {
-      console.log('📍현재 위치 요청...');
+      console.log('현재 위치 요청...');
       alert('현재 위치 확인중...');
       await loadCurrentLocationWeather();
     } catch (err) {
@@ -70,6 +71,7 @@ export default function Weather() {
     }
   };
 
+  // GPS 위치 가져오는 Promise 함수
   const getCurrentPosition = (): Promise<{ latitude: number; longitude: number }> => {
     return new Promise((resolve, reject) => {
       if (!navigator.geolocation) {

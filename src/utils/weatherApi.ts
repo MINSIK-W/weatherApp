@@ -7,6 +7,7 @@ interface WeatherData {
   humidity: number; // 습도
   windSpeed: number; // 풍속
   skyCondition: string; // 하늘상태
+  iconType: 'clear' | 'cloud' | 'drizzle' | 'rain' | 'snow' | 'wind'; // WeatherIcon type
 }
 
 // 원본 응답 타입
@@ -141,7 +142,8 @@ export const weatherApi = async (latitude: number, longitude: number): Promise<W
       temperature: parseFloat(weatherMap.get('TMP') || '0'),
       humidity: parseFloat(weatherMap.get('REH') || '0'),
       windSpeed: parseFloat(weatherMap.get('WSD') || '0'),
-      skyCondition: getSkyCondition(weatherMap.get('SKY') || '1'),
+      skyCondition: getSkyCondition(weatherMap.get('SKY') || '1', weatherMap.get('PTY') || '0'),
+      iconType: getWeatherIcon(weatherMap.get('SKY') || '1', weatherMap.get('PTY') || '0'),
     };
   } catch (err) {
     console.error('날씨 데이터 가져오기 실패:', err);
@@ -152,7 +154,48 @@ export const weatherApi = async (latitude: number, longitude: number): Promise<W
 /**
  * 하늘상태 코드 문자열
  */
-const getSkyCondition = (skyCode: string): string => {
+const getWeatherIcon = (
+  skyCode: string,
+  precipitationType: string
+): 'clear' | 'cloud' | 'drizzle' | 'rain' | 'snow' | 'wind' => {
+  // 강수 타입 우선 처리
+  switch (precipitationType) {
+    case '1':
+      return 'rain'; // 비
+    case '2':
+      return 'drizzle'; // 이슬비/비|눈
+    case '3':
+      return 'snow'; // 눈
+    case '4':
+      return 'rain'; // 소나기
+  }
+  // 강수 없으면 하늘상태로 판단
+  switch (skyCode) {
+    case '1':
+      return 'clear'; // 맑음
+    case '2':
+      return 'cloud'; // 구름많음
+    case '3':
+      return 'cloud'; // 흐림
+    default:
+      return 'clear'; // 기본 맑음
+  }
+};
+
+const getSkyCondition = (skyCode: string, precipitationType: string = '0'): string => {
+  // 강수 타입이 있으면 우선 표시
+  switch (precipitationType) {
+    case '1':
+      return '비';
+    case '2':
+      return '비/눈';
+    case '3':
+      return '눈';
+    case '4':
+      return '소나기';
+  }
+
+  // 강수가 없으면 하늘 상태
   switch (skyCode) {
     case '1':
       return '맑음';
