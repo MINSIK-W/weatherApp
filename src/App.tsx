@@ -1,5 +1,4 @@
 import Weather from './components/Weather.tsx';
-import Developing from './developing/Developing.tsx';
 
 function App() {
   return (
@@ -30,12 +29,6 @@ function App() {
           </p>
         </div>
       </div>
-      <Developing
-        progress={80}
-        eta='8월 4주차 예정'
-        message='작업 진행중입니다.'
-        showCloseButton={true}
-      />
     </>
   );
 }

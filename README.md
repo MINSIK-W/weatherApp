@@ -1,69 +1,25 @@
-# React + TypeScript + Vite
+# 기술 스택
+### Frontend
+<img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" />
+<img alt="TypeScript" src="https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" />
+<img alt="Vite" src="https://img.shields.io/badge/-Vite-646CFF?style=flat-square&logo=vite&logoColor=white" />
+<img alt="Tailwind CSS" src="https://img.shields.io/badge/-Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white" />
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### APIs
+<img alt="Kakao" src="https://img.shields.io/badge/-Kakao_API-FFCD00?style=flat-square&logo=kakao&logoColor=black" />
+<img alt="Korean Weather Service" src="https://img.shields.io/badge/-기상청_API-0066CC?style=flat-square&logoColor=white" />
 
-Currently, two official plugins are available:
+---
+# 주요 기능
+- 자동 현재 위치 감지: GPS를 통한 자동 위치 확인 및 날씨 표시
+- 지역 검색: 카카오 API를 활용한 정확한 지역 검색
+- 기상청 공식 데이터: 한국 기상청 API를 통한 정확한 날씨 정보
+- 상세 날씨 정보: 온도, 습도, 풍속, 하늘 상태
+- 동적 아이콘: 실제 날씨 상태에 맞는 아이콘 자동 변경
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+# 데이터 플로우
+- 자동 위치 감지: GPS → 좌표 획득
+- 주소 변환: 좌표 → 카카오 역지오코딩 → 실제 주소
+- 좌표 변환: GPS 좌표 → 기상청 격자 좌표
+- 날씨 조회: 격자 좌표 → 기상청 API → 실시간 날씨
+- UI 업데이트: 날씨 데이터 → 화면 표시
